@@ -26,4 +26,10 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getProducts(Map<String, String> params) {
         return this.productRepo.getProducts(params);
     }
+
+    @Override
+    public void addOrUpdateProduct(Product p) {
+        p.setImage("https://res.cloudinary.com/dxxwcby8l/image/upload/v1647248652/dkeolz3ghc0eino87iec.jpg");
+        this.productRepo.addOrUpdateProduct(p);
+    }
 }
