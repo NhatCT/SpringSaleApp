@@ -4,27 +4,26 @@
  */
 package com.ntn.services.impl;
 
-import com.ntn.pojo.Category;
-import com.ntn.repositories.CategoryRepository;
-
-import com.ntn.services.CategoryService;
+import com.ntn.pojo.Product;
+import com.ntn.repositories.ProductRepository;
+import com.ntn.services.ProductService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  *
- * @author admin
+ * @author Thanh Nhat
  */
 @Service
-public class CategoryServiceImpl implements CategoryService {
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    private CategoryRepository cateRepo;
-
+    private ProductRepository productRepo;
+    
     @Override
-    public List<Category> getCates() {
-        return this.cateRepo.getCates();
+    public List<Product> getProducts(Map<String, String> params) {
+        return this.productRepo.getProducts(params);
     }
-
 }

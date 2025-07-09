@@ -24,5 +24,55 @@
                 </div>
             </div>
         </nav>
+        <main class="container">
+            <h1 class="text-info text-center mt-2">QUẢN LÝ SẢN PHẨM</h1>
+
+            <div class="mt-2 mb-2">
+                <a th:href="@{/products}" class="btn btn-success">Thêm sản phẩm</a>
+            </div>
+            <div>
+                <form th:action="@{/}">
+                    <div class="form-floating mb-3 mt-3">
+                        <input type="text" class="form-control" id="kw" placeholder="Nhập từ khóa" name="kw">
+                        <label for="kw">Nhập từ khóa</label>
+                    </div>
+                    <div class="form-floating mb-3 mt-3 row">
+                        <div class="col-md-6 col-12">
+                            <input type="number" id="from" class="form-control" placeholder="Gia min" name="fromPrice">
+                            <label for="from">Gia min</label>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <input type="number" id="to" class="form-control" placeholder="Gia min" name="toPrice">
+                            <label for="to">Gia max</label>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3 mt-3">
+                        <button type="submit" class="btn btn-info">Tìm kiếm</button>
+                        <label for="kw">Nhập từ khóa</label>
+                    </div>
+                </form>
+            </div> 
+            <table class="table">
+                <tr>
+                    <th></th>
+                    <th>Id</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th></th>
+                </tr>
+                <tr th:each="p:${products}">
+                    <td>
+                        <img th:src="${p.image}" width="200" class="rounded"/>
+                    </td>
+                    <td th:text="${p.id}"></td>
+                    <td th:text="${p.name}"></td>
+                    <td th:text="${p.price} +'VNĐ'"></td>
+                    <td>
+                        <a href="#" class="btn btn-info">Cập nhật</a>
+                        <button class="btn btn-danger">Xóa</button>
+                    </td>
+                </tr>
+            </table>
+        </main>
     </body>
 </html>
