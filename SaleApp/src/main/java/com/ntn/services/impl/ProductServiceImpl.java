@@ -4,11 +4,16 @@
  */
 package com.ntn.services.impl;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.ntn.pojo.Product;
 import com.ntn.repositories.ProductRepository;
 import com.ntn.services.ProductService;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +26,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepo;
-    
+    @Autowired
+    private Cloudinary cloudinary;
+
     @Override
     public List<Product> getProducts(Map<String, String> params) {
         return this.productRepo.getProducts(params);
@@ -29,7 +36,26 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void addOrUpdateProduct(Product p) {
-        p.setImage("https://res.cloudinary.com/dxxwcby8l/image/upload/v1647248652/dkeolz3ghc0eino87iec.jpg");
+        if (!p.getFile().isEmpty()) {
+            try {
+                Map res = cloudinary.uploader().upload(p.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                p.setImage(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(ProductServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         this.productRepo.addOrUpdateProduct(p);
+    }
+
+    @Override
+    public Product geProductById(int id) {
+        return this.productRepo.getProductById(id);
+    }
+
+    @Override
+    public void deleteProduct(int id) {
+        this.productRepo.deleteProduct(id);
     }
 }

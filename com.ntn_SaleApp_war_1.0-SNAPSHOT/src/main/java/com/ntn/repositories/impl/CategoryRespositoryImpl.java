@@ -25,7 +25,6 @@ public class CategoryRespositoryImpl implements CategoryRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
     
-    @Override
     public List<Category> getCates() {
  
             Session s=this.factory.getObject().getCurrentSession();
